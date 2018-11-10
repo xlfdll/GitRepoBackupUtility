@@ -8,9 +8,9 @@ A simple Git repository backup utility
 
 ## Usage
 ```
-GitRepoBackupUtility /list [list file]
+GitRepoBackupUtility /? | /list [list file]
 ```
-* **\<no arguments\>** - Show usage
+* **\<no arguments\>** or **/?** - Show usage
 * **/list** - Backup repositories specified in list file
   * **\[list file\]** - List file path (optional)
   * If list file is not specified, **repos.list** in current working directory will be used
