@@ -1,0 +1,9 @@
+﻿// Prefix (# = Repository name)
+< https://github.com/xlfdll/
+// Postfix (# = Repository name)
+> .git
+
+// Repository name list
+
+// # <Repository Name>
+# GitRepoBackupUtility
