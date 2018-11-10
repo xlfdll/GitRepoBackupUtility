@@ -8,7 +8,7 @@ namespace GitRepoBackupUtility
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Git Repository Backup Tool");
+            Console.WriteLine("Git Repository Backup Utility");
             Console.WriteLine("(C) 2018 Xlfdll Workstation");
             Console.WriteLine();
 

@@ -11,7 +11,7 @@ namespace GitRepoBackupUtility
         {
             Console.WriteLine("Usage:");
             Console.WriteLine();
-            Console.WriteLine("GitRepoBackupTool /list [list file]");
+            Console.WriteLine("GitRepoBackupUtility /list [list file]");
             Console.WriteLine("- Backup repositories specified in list file.");
             Console.WriteLine("- If list file is not specified, 'repos.list' in current working directory will be used");
             Console.WriteLine();
