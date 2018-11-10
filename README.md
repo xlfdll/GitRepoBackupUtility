@@ -3,6 +3,8 @@ A simple Git repository backup utility.
 
 ## System Requirements
 * .NET Framework 4.7.2+
+* Git for Windows
+* Git Credential Manager for Windows (to support OAuth-based authentication, such as GitHub and Azure DevOps)
 
 [Runtime configuration](https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-configure-an-app-to-support-net-framework-4-or-4-5) is needed for running on other versions of .NET Framework.
 
