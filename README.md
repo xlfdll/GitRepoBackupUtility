@@ -1,5 +1,5 @@
 # Git Repository Backup Utility
-A simple Git repository backup utility
+A simple Git repository backup utility.
 
 ## System Requirements
 * .NET Framework 4.7.2+
@@ -14,6 +14,8 @@ GitRepoBackupUtility /? | /list [list file]
 * **/list** - Backup repositories specified in list file
   * **\[list file\]** - List file path (optional)
   * If list file is not specified, **repos.list** in current working directory will be used
+
+An example list file can be found in **Examples** directory.
 
 ## Development Prerequisites
 * Visual Studio 2015+
