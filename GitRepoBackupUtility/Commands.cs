@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 
 namespace GitRepoBackupUtility
@@ -23,7 +24,8 @@ namespace GitRepoBackupUtility
             String postfix = String.Empty;
             List<String> repos = new List<String>();
 
-            backupFolder = Path.GetFullPath(backupFolder);
+            String currentAssemblyLocation = Assembly.GetEntryAssembly().Location;
+            backupFolder = Path.Combine(Path.GetDirectoryName(currentAssemblyLocation), backupFolder);
 
             if (Directory.Exists(backupFolder))
             {
@@ -31,6 +33,9 @@ namespace GitRepoBackupUtility
             }
 
             Directory.CreateDirectory(backupFolder);
+
+            Console.WriteLine($"{backupFolder} created.");
+            Console.WriteLine();
 
             using (StreamReader reader = new StreamReader(fileName, Encoding.UTF8))
             {

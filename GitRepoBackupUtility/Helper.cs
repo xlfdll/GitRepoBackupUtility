@@ -21,12 +21,11 @@ namespace GitRepoBackupUtility
 
         public static void CloneGitRepo(String address, String backupFolder)
         {
-            Environment.CurrentDirectory = backupFolder;
-
             ProcessStartInfo startInfo = new ProcessStartInfo("git", $"clone {address}")
             {
                 UseShellExecute = false,
-                RedirectStandardOutput = true
+                RedirectStandardOutput = true,
+                WorkingDirectory = backupFolder
             };
 
             using (Process p = new Process() { StartInfo = startInfo })
@@ -38,15 +37,14 @@ namespace GitRepoBackupUtility
 
         public static void CompressFolder(String folder, String backupFolder)
         {
-            Environment.CurrentDirectory = backupFolder;
-
             String compressionUtilityPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"WinRAR\rar.exe");
             String compressionArguments = $"a -df -s -rr {Path.GetFileName(folder)}.rar {Path.GetFileName(folder)}";
 
             ProcessStartInfo startInfo = new ProcessStartInfo(compressionUtilityPath, compressionArguments)
             {
                 UseShellExecute = false,
-                RedirectStandardOutput = false
+                RedirectStandardOutput = false,
+                WorkingDirectory = backupFolder
             };
 
             using (Process p = new Process() { StartInfo = startInfo })
