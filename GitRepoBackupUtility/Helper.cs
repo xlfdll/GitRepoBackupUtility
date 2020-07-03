@@ -35,6 +35,22 @@ namespace GitRepoBackupUtility
             }
         }
 
+        public static void FetchGitRemote(String folder)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo("git", "fetch --all --tags")
+            {
+                UseShellExecute = false,
+                RedirectStandardOutput = false,
+                WorkingDirectory = folder
+            };
+
+            using (Process p = new Process() { StartInfo = startInfo })
+            {
+                p.Start();
+                p.WaitForExit();
+            }
+        }
+
         public static void CompressFolder(String folder, String backupFolder)
         {
             String compressionUtilityPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"WinRAR\rar.exe");

@@ -76,13 +76,25 @@ namespace GitRepoBackupUtility
 
             foreach (String repo in repos)
             {
-                Helper.CloneGitRepo(prefix.Replace("#", repo) + repo + postfix.Replace("#", repo), backupFolder);
+                String repoAddress = prefix.Replace("#", repo) + repo + postfix.Replace("#", repo);
+
+                Console.WriteLine($"Cloning {repoAddress}...");
+
+                Helper.CloneGitRepo(repoAddress, backupFolder);
 
                 Console.WriteLine();
             }
 
             foreach (String folder in Directory.GetDirectories(backupFolder))
             {
+                Console.WriteLine($"Fetching {Path.GetFileName(folder)}...");
+
+                Helper.FetchGitRemote(folder);
+
+                Console.WriteLine();
+
+                Console.WriteLine($"Compressing {Path.GetFileName(folder)}...");
+
                 Helper.CompressFolder(folder, backupFolder);
 
                 Console.WriteLine();
