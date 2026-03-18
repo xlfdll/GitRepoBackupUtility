@@ -11,7 +11,7 @@ using Xlfdll;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Xlfdll Workstation")]
 [assembly: AssemblyProduct("Git Repository Backup Utility")]
-[assembly: AssemblyCopyright("© 2018-2020 Xlfdll Workstation")]
+[assembly: AssemblyCopyright("© 2018-2026 Xlfdll Workstation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,4 +33,4 @@ using Xlfdll;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1." + BuildInfo.Build)]
+[assembly: AssemblyVersion("1.2." + BuildInfo.Build)]
