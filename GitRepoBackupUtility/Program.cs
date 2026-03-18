@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace GitRepoBackupUtility
 {
@@ -9,62 +7,81 @@ namespace GitRepoBackupUtility
         static void Main(string[] args)
         {
             Console.WriteLine("Git Repository Backup Utility");
-            Console.WriteLine("(C) 2018 Xlfdll Workstation");
+            Console.WriteLine("(C) 2018-2026 Xlfdll Workstation");
             Console.WriteLine();
 
             if (args.Length == 0)
             {
                 Commands.ShowUsage();
+
+                return;
             }
             else
             {
-                switch (args[0])
+                Boolean containsList = false;
+                String listFileName = null;
+                Boolean isMirror = false;
+
+                for (Int32 i = 0; i < args.Length; i++)
                 {
-                    case "/?":
-                        {
-                            Commands.ShowUsage();
+                    String arg = args[i];
 
-                            break;
-                        }
-                    case "/list":
-                        {
-                            ProcessStartInfo startInfo = new ProcessStartInfo("git")
+                    switch (arg)
+                    {
+                        case "/?":
                             {
-                                UseShellExecute = false,
-                                RedirectStandardOutput = true
-                            };
+                                Commands.ShowUsage();
 
-                            try
-                            {
-                                using (Process p = new Process() { StartInfo = startInfo })
-                                {
-                                    p.Start();
-                                    p.WaitForExit();
-                                }
+                                return;
                             }
-                            catch (Win32Exception)
+                        case "/list":
                             {
-                                Console.WriteLine("ERROR: Git is not installed or not accessible!");
+                                containsList = true;
+
+                                if (i + 1 < args.Length && !args[i + 1].StartsWith("/"))
+                                {
+                                    listFileName = args[i + 1];
+
+                                    i++; // Skip filename
+                                }
 
                                 break;
                             }
+                        case "/mirror":
+                            {
+                                isMirror = true;
 
-                            String fileName = args.Length > 1 && !String.IsNullOrEmpty(args[1])
-                                ? args[1] : "repos.list";
+                                break;
+                            }
+                        default:
+                            {
+                                Console.WriteLine("ERROR: Unknown arguments.");
+                                Console.WriteLine();
 
-                            Commands.HandleRepoList(fileName, "Backups");
+                                Commands.ShowUsage();
 
-                            break;
-                        }
-                    default:
-                        {
-                            Console.WriteLine("ERROR: Unknown arguments.");
-                            Console.WriteLine();
+                                return;
+                            }
+                    }
+                }
 
-                            Commands.ShowUsage();
+                if (containsList)
+                {
+                    if (Commands.CheckGitInstallation())
+                    {
+                        String fileName = listFileName ?? "repos.list";
 
-                            break;
-                        }
+                        Commands.HandleRepoList(fileName, "Backups", isMirror);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("ERROR: No valid arguments.");
+                    Console.WriteLine();
+
+                    Commands.ShowUsage();
+
+                    return;
                 }
             }
         }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -8,17 +10,45 @@ namespace GitRepoBackupUtility
 {
     public static class Commands
     {
+        public static Boolean CheckGitInstallation()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo("git")
+            {
+                UseShellExecute = false,
+                RedirectStandardOutput = true
+            };
+
+            try
+            {
+                using (Process p = new Process() { StartInfo = startInfo })
+                {
+                    p.Start();
+                    p.WaitForExit();
+                }
+            }
+            catch (Win32Exception)
+            {
+                Console.WriteLine("ERROR: Git is not installed or not accessible!");
+
+                return false;
+            }
+
+            return true;
+        }
+
         public static void ShowUsage()
         {
             Console.WriteLine("Usage:");
             Console.WriteLine();
-            Console.WriteLine("GitRepoBackupUtility /list [list file]");
-            Console.WriteLine("- Backup repositories specified in list file.");
+            Console.WriteLine("GitRepoBackupUtility /list [list file] [/mirror]");
+            Console.WriteLine("- /list - Backup repositories specified in list file.");
             Console.WriteLine("- If list file is not specified, 'repos.list' in current working directory will be used");
+            Console.WriteLine();
+            Console.WriteLine("- /mirror - Backup a complete mirror of the original repositories.");
             Console.WriteLine();
         }
 
-        public static void HandleRepoList(String fileName, String backupFolder)
+        public static void HandleRepoList(String fileName, String backupFolder, Boolean isMirror)
         {
             String prefix = String.Empty;
             String postfix = String.Empty;
@@ -80,18 +110,21 @@ namespace GitRepoBackupUtility
 
                 Console.WriteLine($"Cloning {repoAddress}...");
 
-                Helper.CloneGitRepo(repoAddress, backupFolder);
+                Helper.CloneGitRepo(repoAddress, backupFolder, isMirror);
 
                 Console.WriteLine();
             }
 
             foreach (String folder in Directory.GetDirectories(backupFolder))
             {
-                Console.WriteLine($"Fetching {Path.GetFileName(folder)}...");
+                if (!isMirror)
+                {
+                    Console.WriteLine($"Fetching {Path.GetFileName(folder)}...");
 
-                Helper.FetchGitRemote(folder);
+                    Helper.FetchGitRemote(folder);
 
-                Console.WriteLine();
+                    Console.WriteLine();
+                }
 
                 Console.WriteLine($"Compressing {Path.GetFileName(folder)}...");
 

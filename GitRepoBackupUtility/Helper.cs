@@ -19,9 +19,9 @@ namespace GitRepoBackupUtility
             }
         }
 
-        public static void CloneGitRepo(String address, String backupFolder)
+        public static void CloneGitRepo(String address, String backupFolder, Boolean isMirror)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo("git", $"clone {address}")
+            ProcessStartInfo startInfo = new ProcessStartInfo("git", $"clone {(isMirror ? "--mirror" : String.Empty)} {address}")
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
